@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  db:
+    build: ./db
+    environment:
+      TZ: "Asia/Tokyo"
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-mydb}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
+      MYSQL_USER: ${MYSQL_USER:-dbuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+    volumes:
+      - fastapi-graphql-db-volume:/var/lib/mysql
+      - ./db/cnf:/etc/mysql/conf.d
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+  api:
+    build: ./
+    volumes:
+      - fastapi-graphql-poetry-volume:/var/www/.venv
+      - ./:/var/www
+    environment:
+      DB_USER: ${DB_USER:-dbuser}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      DB_HOST: ${DB_HOST:-mydb}
+      DB_NAME: ${DB_NAME:-testdb}
+      WAIT_HOSTS: db:3306
+    depends_on:
+        - db
+volumes:
+  fastapi-graphql-db-volume:
+    external: true
+  fastapi-graphql-poetry-volume:
+    external: true
+networks:
+  default:
+    name: sqlalchemy-sandbox
