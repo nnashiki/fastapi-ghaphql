@@ -58,7 +58,7 @@ class Team(BaseModel):
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
 
-    tenant = relationship("Tenant", back_populates="teams")
+    tenant = relationship("Tenant", back_populates="teams", passive_deletes=True)
     users = relationship("User", back_populates="team", cascade="all", passive_deletes=True)
 
 
