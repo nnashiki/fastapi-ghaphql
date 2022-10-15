@@ -24,6 +24,7 @@ services:
       DB_HOST: ${DB_HOST:-mydb}
       DB_NAME: ${DB_NAME:-testdb}
       WAIT_HOSTS: db:3306
+      WAIT_AFTER: 10
     depends_on:
         - db
 volumes:
