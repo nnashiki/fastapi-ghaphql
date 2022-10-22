@@ -2,6 +2,8 @@ import strawberry
 from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
 
+from .graphql.schema import schema
+
 
 @strawberry.type
 class Query:
@@ -10,7 +12,6 @@ class Query:
         return "Hello World"
 
 
-schema = strawberry.Schema(Query)
 graphql_app = GraphQLRouter(schema)
 
 app = FastAPI()

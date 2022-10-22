@@ -5,4 +5,5 @@ reset:
 	- docker volume rm fastapi-graphql-poetry-volume;
 	docker volume create fastapi-graphql-db-volume;
 	docker volume create fastapi-graphql-poetry-volume;
-	docker compose up --build;
+	docker compose up -d --build;
+	docker compose exec -T api poetry run alembic upgrade head;
