@@ -5,4 +5,4 @@ reset:
 	- docker volume rm fastapi-graphql-poetry-volume;
 	docker volume create fastapi-graphql-db-volume;
 	docker volume create fastapi-graphql-poetry-volume;
-	docker compose run api bash
+	docker compose up --build;

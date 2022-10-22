@@ -27,6 +27,8 @@ services:
       WAIT_AFTER: 10
     depends_on:
         - db
+    ports:
+        - "${API_PORT:-8000}:8000"
 volumes:
   fastapi-graphql-db-volume:
     external: true

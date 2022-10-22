@@ -11,6 +11,7 @@ SQLAlchemy = "^1.4.39"
 PyMySQL = "^1.0.2"
 uvicorn = "^0.18.3"
 fastapi = "^0.85.0"
+strawberry-graphql = {extras = ["fastapi"], version = "^0.137.0"}
 
 [tool.poetry.group.dev.dependencies]
 taskipy = "^1.10.3"
