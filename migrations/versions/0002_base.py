@@ -5,9 +5,8 @@ Revises: 0001
 Create Date: 2022-10-15 00:36:18.645764+09:00
 
 """
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "0002"
@@ -55,9 +54,7 @@ def upgrade() -> None:
         sa.Column("team_id", sa.Integer(), nullable=True),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["team_id"], ["teams.id"], name=op.f("fk_users_team_id_teams")
-        ),
+        sa.ForeignKeyConstraint(["team_id"], ["teams.id"], name=op.f("fk_users_team_id_teams")),
         sa.ForeignKeyConstraint(
             ["tenant_id"],
             ["tenants.id"],

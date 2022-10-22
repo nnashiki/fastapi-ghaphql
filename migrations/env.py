@@ -2,18 +2,12 @@ from logging.config import fileConfig
 from typing import Sequence, Union
 
 from alembic import context
-from alembic.autogenerate import rewriter
 from alembic.operations import ops
-from alembic.operations.ops import MigrationScript
 from alembic.script import ScriptDirectory
-from sqlalchemy import (
-    Column,
-    Constraint,
-    UniqueConstraint,
-    engine_from_config,
-    exc,
-    pool,
-)
+from sqlalchemy import (Column, Constraint, UniqueConstraint,
+                        engine_from_config, pool)
+
+from app.models import BaseModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -26,7 +20,7 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from app.models import BaseModel
+
 
 target_metadata = BaseModel.metadata
 

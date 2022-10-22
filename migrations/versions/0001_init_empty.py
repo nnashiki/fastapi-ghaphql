@@ -1,12 +1,10 @@
 """init_empty
 
 Revision ID: 0001
-Revises: 
+Revises:
 Create Date: 2022-08-23 08:16:45.356037+09:00
 
 """
-import sqlalchemy as sa
-from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "0001"

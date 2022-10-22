@@ -2,7 +2,6 @@ from app import models
 
 
 class TestUsers:
-
     @staticmethod
     def _create_tenant_and_users(session):
         tenant = models.Tenant(name="新撰組")
@@ -27,10 +26,7 @@ class TestUsers:
         assert user.tenant.name == "新撰組"
         assert tenant.users[0].id == user.id
 
-    def test_tenantを削除するとuserも削除される( # noqa
-            self,
-            session
-        ):
+    def test_tenantを削除するとuserも削除される(self, session):  # noqa
         tenant, team, user = self._create_tenant_and_users(session)
         session.delete(team)
         user.team_id = None

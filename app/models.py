@@ -1,10 +1,7 @@
 import uuid
 
 from sqlalchemy import Column, ForeignKey, MetaData, UniqueConstraint, func
-from sqlalchemy.orm import (
-    declarative_base,
-    relationship,
-)
+from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.types import DateTime, Integer, String
 
 convention = {
@@ -53,7 +50,10 @@ class Tenant(BaseModel):
 
 class Team(BaseModel):
     __tablename__ = "teams"
-    __table_args__ = (UniqueConstraint("name"),  {"comment": "チーム", "info": {}},)
+    __table_args__ = (
+        UniqueConstraint("name"),
+        {"comment": "チーム", "info": {}},
+    )
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
@@ -64,8 +64,10 @@ class Team(BaseModel):
 
 class User(BaseModel):
     __tablename__ = "users"
-    __table_args__ = (UniqueConstraint("name", "tenant_id"),
-                      {"comment": "ユーザー", "info": {}},)
+    __table_args__ = (
+        UniqueConstraint("name", "tenant_id"),
+        {"comment": "ユーザー", "info": {}},
+    )
     id = Column(String(36), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)

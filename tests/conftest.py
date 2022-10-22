@@ -1,5 +1,6 @@
 import pytest
-from app import models, database
+
+from app import database, models
 
 
 def init_tables(session):
