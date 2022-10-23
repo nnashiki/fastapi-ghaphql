@@ -1,6 +1,7 @@
-from app import routers
 from app.graphql.types import tenant as type_tenant
+from app import usecase
 
 
 def my_tenant() -> type_tenant.Tenant:
-    return routers.my_tenant.read_my_tenant()
+    return usecase.tenant.read_my_tenant()
+
