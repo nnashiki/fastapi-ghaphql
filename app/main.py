@@ -1,18 +1,10 @@
-import strawberry
 from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
 
-from .graphql.schema import schema
+from app.gql_context import get_context
+from app.graphql.schema import schema
 
-
-@strawberry.type
-class Query:
-    @strawberry.field
-    def hello(self) -> str:
-        return "Hello World"
-
-
-graphql_app = GraphQLRouter(schema)
+graphql_app = GraphQLRouter(schema, context_getter=get_context)
 
 app = FastAPI()
 
