@@ -1,3 +1,3 @@
-from . import tenant
+from . import tenant, user
 
-__all__ = ["tenant"]
+__all__ = ["tenant", "user"]
