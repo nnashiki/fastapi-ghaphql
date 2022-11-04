@@ -1,6 +1,6 @@
 import strawberry
 
 
-@strawberry.type
+@strawberry.input
 class TenantInput:
     name: str
