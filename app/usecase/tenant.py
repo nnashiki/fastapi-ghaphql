@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy.orm import Session
 
 from app.models import Tenant
@@ -16,6 +18,20 @@ def create_tenant(db: Session, name: str) -> Tenant:
     return tenant
 
 
-def read_tenant(db: Session, tenant_id: str) -> Tenant:
+def read_tenant(db: Session, tenant_id: uuid.UUID) -> Tenant:
     tenant = db.get(Tenant, tenant_id)
     return tenant
+
+
+def update_tenant(db: Session, tenant_id: uuid.UUID, name: str) -> Tenant:
+    tenant = db.get(Tenant, tenant_id)
+    tenant.name = name
+    db.commit()
+    return tenant
+
+
+def delete_tenant(db: Session, tenant_id: uuid.UUID) -> None:
+    tenant = db.get(Tenant, tenant_id)
+    db.delete(tenant)
+    db.commit()
+    return
