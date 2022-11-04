@@ -47,6 +47,8 @@ class Tenant(BaseModel):
         passive_deletes=True,
     )
 
+    posts = relationship("Post", back_populates="tenant", cascade="all", passive_deletes=True)
+
 
 class Team(BaseModel):
     __tablename__ = "teams"
@@ -75,3 +77,20 @@ class User(BaseModel):
 
     tenant = relationship("Tenant", back_populates="users")
     team = relationship("Team", back_populates="users")
+    posts = relationship("Post", back_populates="posted_by", cascade="all", passive_deletes=True)
+
+
+class Post(BaseModel):
+    __tablename__ = "posts"
+    __table_args__ = (
+        UniqueConstraint("title", "tenant_id"),
+        {"comment": "投稿", "info": {}},
+    )
+    id = Column(Integer, primary_key=True)
+    title = Column(String(255), nullable=False)
+    detail = Column(String(255), nullable=False)
+    tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
+    posted_by_id = Column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+
+    tenant = relationship("Tenant", back_populates="posts")
+    posted_by = relationship("User", back_populates="posts")
