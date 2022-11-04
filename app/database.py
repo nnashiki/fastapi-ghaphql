@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-_engine = create_engine("mysql+pymysql://dbuser:password@db/mydb", encoding="utf-8", echo=True)
+_engine = create_engine("mysql+pymysql://dbuser:password@db/mydb", encoding="utf-8")
 _SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=_engine)
 
 
@@ -11,3 +11,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def get_session_maker():
+    return _SessionLocal
