@@ -8,7 +8,7 @@ from app.graphql.types.user import User
 
 @strawberry.type
 class Query:
-    my_tenant: Tenant = strawberry.field(resolver=resolvers.tenant.my_tenant)
+    tenant_me: Tenant = strawberry.field(resolver=resolvers.tenant.my_tenant)
 
     tenant: Tenant = strawberry.field(resolver=resolvers.tenant.read_tenant)
 
