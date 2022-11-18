@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy import Column, ForeignKey, MetaData, UniqueConstraint, func
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy.types import DateTime, Integer, String, BigInteger
+from sqlalchemy.types import BigInteger, DateTime, Integer, String
 
 convention = {
     "ix": "ix_%(column_0_label)s",
@@ -52,7 +52,10 @@ class Role(BaseModel):
     __tablename__ = "roles"
     __table_args__ = (
         UniqueConstraint("name"),
-        {"comment": "ロール(1:super, 10:basic plan member, 11:basic plan Admin, 20: premium plan member,  21: premium plan admin 99:停止ユーザー", "info": {}},
+        {
+            "comment": "ロール(1:super, 10:basic plan member, 11:basic plan Admin, 20: premium plan member,  21: premium plan admin 99:停止ユーザー",
+            "info": {},
+        },
     )
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
