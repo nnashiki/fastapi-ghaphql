@@ -31,9 +31,9 @@ services:
         - "${API_PORT:-8000}:8000"
 volumes:
   fastapi-graphql-db-volume:
-    external: true
+    external: false
   fastapi-graphql-poetry-volume:
-    external: true
+    external: false
 networks:
   default:
     name: sqlalchemy-sandbox
