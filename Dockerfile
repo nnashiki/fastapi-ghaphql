@@ -1,6 +1,6 @@
 FROM python:3.10
 
-ARG project_dir=/var/www
+ARG project_dir=/workspace
 WORKDIR $project_dir
 COPY ./ $project_dir
 

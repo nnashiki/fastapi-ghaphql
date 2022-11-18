@@ -16,8 +16,8 @@ services:
   api:
     build: ./
     volumes:
-      - fastapi-graphql-poetry-volume:/var/www/.venv
-      - ./:/var/www
+      - fastapi-graphql-poetry-volume:/workspace/.venv
+      - ./:/workspace
     environment:
       DB_USER: ${DB_USER:-dbuser}
       DB_PASSWORD: ${DB_PASSWORD:-password}
