@@ -2,5 +2,5 @@
   "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
   "service": "api",
   "workspaceFolder": "/workspace",
-  "postCreateCommand": ".devcontainer/postCreate.sh"
+  "postCreateCommand": "/wait && alembic upgrade head;"
 }
