@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.9
 
 ARG project_dir=/workspace
 WORKDIR $project_dir
@@ -17,4 +17,4 @@ RUN poetry install --no-interaction
 
 RUN echo 'poetry shell' >> ~/.bashrc
 
-CMD /wait && poetry run task serve
+CMD /wait && poetry run python3 -m debugpy --listen 0.0.0.0:5678 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

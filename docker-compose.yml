@@ -29,6 +29,9 @@ services:
         - db
     ports:
         - "${API_PORT:-8000}:8000"
+        - "${DEBUG_PORT:-5678}:5678"
+    expose:
+        - "5678"
 volumes:
   fastapi-graphql-db-volume:
     external: false
