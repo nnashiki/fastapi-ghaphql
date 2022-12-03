@@ -53,15 +53,21 @@ python_src_dir = "app tests migrations"
 flake_ignore = "E501,E203,W503,W504"
 
 [tool.taskipy.tasks]
+# 組み合わせ
 fmt = { cmd = "task black && task isort && task flake8", help = "format code" }
 fmt_check = { cmd = "task black_check && task isort_check && task flake8", help = "format code with check option" }
+init = { cmd = "/wait && alembic upgrade head && task test"}
+
 serve = "uvicorn app.main:app --reload --host 0.0.0.0"
 test = "pytest . -s"
+load_data_local = "python -m tools.fixtures.development"
+reset_db = "alembic downgrade 0001 && alembic upgrade head"
+export = "poetry export -f requirements.txt --output ./requirements.txt"
+
+# format
 black = { cmd = "black {python_src_dir}", use_vars = true }
 black_check = { cmd = "black {python_src_dir} --check", use_vars = true }
 isort = { cmd = "isort {python_src_dir}", use_vars = true }
 isort_check = { cmd = "isort {python_src_dir} --check-only", use_vars = true }
 flake8 = { cmd = "flake8 --ignore {flake_ignore} {python_src_dir}", use_vars = true }
-load_data_local = "python -m tools.fixtures.development"
-reset_db = "alembic downgrade 0001 && alembic upgrade head"
-export = "poetry export -f requirements.txt --output ./requirements.txt"
+

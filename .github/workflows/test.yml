@@ -14,7 +14,6 @@ jobs:
           docker volume create fastapi-graphql-db-volume
           docker volume create fastapi-graphql-poetry-volume
           docker-compose up -d --build
-          docker-compose exec -T api /wait && alembic upgrade head && poetry run pytest
-          docker-compose down
+          docker-compose exec -T api poetry run task init
         shell: bash
 
