@@ -7,6 +7,7 @@ from app.database import get_db
 
 class CustomContext(BaseContext):
     def __init__(self, db: Session):
+        super().__init__()
         self.db = db
 
 

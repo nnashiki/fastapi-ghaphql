@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy import Column, ForeignKey, MetaData, UniqueConstraint, func
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy.types import DateTime, Integer, String
+from sqlalchemy.types import BigInteger, DateTime, Integer, String
 
 convention = {
     "ix": "ix_%(column_0_label)s",
@@ -26,11 +26,60 @@ class Base:
 BaseModel = declarative_base(metadata=metadata, cls=Base)
 
 
+class ServicePlan(BaseModel):
+    __tablename__ = "service_plans"
+    __table_args__ = (
+        UniqueConstraint("name"),
+        {"comment": "サービスプラン", "info": {}},
+    )
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+
+    tenants = relationship("Tenant", back_populates="service_plan")
+
+
+class Right(BaseModel):
+    __tablename__ = "rights"
+    __table_args__ = (
+        UniqueConstraint("name"),
+        {"comment": "権限", "info": {}},
+    )
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+
+
+class Role(BaseModel):
+    __tablename__ = "roles"
+    __table_args__ = (
+        UniqueConstraint("name"),
+        {
+            "comment": "ロール(1:super, 10:basic plan member, 11:basic plan Admin, 20: premium plan member,  21: premium plan admin 99:停止ユーザー",
+            "info": {},
+        },
+    )
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+
+
+class RightRoleMapping(BaseModel):
+    __tablename__ = "right_role_mappings"
+    __table_args__ = (
+        UniqueConstraint("right_id", "role_id"),
+        {"comment": "権限ロールマッピング", "info": {}},
+    )
+    id = Column(Integer, primary_key=True)
+    right_id = Column(Integer, ForeignKey("rights.id", ondelete="CASCADE"), nullable=False)
+    role_id = Column(Integer, ForeignKey("roles.id", ondelete="CASCADE"), nullable=False)
+
+
 class Tenant(BaseModel):
     __tablename__ = "tenants"
     __table_args__ = (UniqueConstraint("name"), {})
     id = Column(String(36), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
+    service_plan_id = Column(Integer, ForeignKey("service_plans.id"), nullable=False)
+
+    plan = relationship("ServicePlan", back_populates="tenants")
 
     users = relationship(
         "User",
@@ -56,7 +105,7 @@ class Team(BaseModel):
         UniqueConstraint("name"),
         {"comment": "チーム", "info": {}},
     )
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
 
@@ -73,7 +122,7 @@ class User(BaseModel):
     id = Column(String(36), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    team_id = Column(Integer, ForeignKey("teams.id"), nullable=True)
+    team_id = Column(BigInteger, ForeignKey("teams.id"), nullable=True)
 
     tenant = relationship("Tenant", back_populates="users")
     team = relationship("Team", back_populates="users")
@@ -86,7 +135,7 @@ class Post(BaseModel):
         UniqueConstraint("title", "tenant_id"),
         {"comment": "投稿", "info": {}},
     )
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     title = Column(String(255), nullable=False)
     detail = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
