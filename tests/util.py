@@ -2,7 +2,11 @@ from app import models
 
 
 def create_tenant_and_users(session):
-    tenant = models.Tenant(name="新撰組")
+    plan = models.ServicePlan(name="free")
+    session.add(plan)
+    session.commit()
+
+    tenant = models.Tenant(name="新撰組", service_plan_id=plan.id)
     session.add(tenant)
     session.commit()
 

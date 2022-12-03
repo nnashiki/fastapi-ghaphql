@@ -4,8 +4,7 @@ from typing import Sequence, Union
 from alembic import context
 from alembic.operations import ops
 from alembic.script import ScriptDirectory
-from sqlalchemy import (Column, Constraint, UniqueConstraint,
-                        engine_from_config, pool)
+from sqlalchemy import Column, Constraint, UniqueConstraint, engine_from_config, pool
 
 from app.models import BaseModel
 

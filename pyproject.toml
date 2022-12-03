@@ -48,6 +48,9 @@ exclude = '''
 )
 '''
 
+[tool.isort]
+profile = "black"
+
 [tool.taskipy.variables]
 python_src_dir = "app tests migrations"
 flake_ignore = "E501,E203,W503,W504"

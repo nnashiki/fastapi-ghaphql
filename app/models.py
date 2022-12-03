@@ -79,7 +79,7 @@ class Tenant(BaseModel):
     name = Column(String(255), nullable=False)
     service_plan_id = Column(Integer, ForeignKey("service_plans.id"), nullable=False)
 
-    plan = relationship("ServicePlan", back_populates="tenants")
+    service_plan = relationship("ServicePlan", back_populates="tenants")
 
     users = relationship(
         "User",
