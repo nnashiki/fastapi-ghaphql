@@ -1,7 +1,7 @@
 from app import models
 
 
-def create_tenant_and_users(session) -> (models.Tenant, models.User):
+def create_tenant_and_users(session) -> (models.Tenant, models.TenantUser):
     plan = models.ServicePlan(name="free")
     session.add(plan)
     session.commit()
@@ -10,7 +10,7 @@ def create_tenant_and_users(session) -> (models.Tenant, models.User):
     session.add(tenant)
     session.commit()
 
-    user = models.User(tenant_id=tenant.id, name="沖田総司")
+    user = models.TenantUser(tenant_id=tenant.id, name="沖田総司")
     session.add(user)
     session.commit()
     return user.tenant, user
