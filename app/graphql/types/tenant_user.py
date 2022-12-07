@@ -6,7 +6,7 @@ from .tenant import Tenant
 
 
 @strawberry.type
-class User:
+class TenantUser:
     id: uuid.UUID
     name: str
     tenant: Tenant

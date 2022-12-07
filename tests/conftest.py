@@ -7,7 +7,7 @@ from app.main import app
 
 def init_tables(session):
     # 初期化
-    session.query(models.User).delete()
+    session.query(models.TenantUser).delete()
     session.query(models.Tenant).delete()
     session.query(models.ServicePlan).delete()
     session.commit()

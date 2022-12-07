@@ -81,8 +81,8 @@ class Tenant(BaseModel):
 
     service_plan = relationship("ServicePlan", back_populates="tenants")
 
-    users = relationship(
-        "User",
+    tenant_users = relationship(
+        "TenantUser",
         back_populates="tenant",
         cascade="all",
         passive_deletes=True,
@@ -91,8 +91,8 @@ class Tenant(BaseModel):
     posts = relationship("Post", back_populates="tenant", cascade="all", passive_deletes=True)
 
 
-class User(BaseModel):
-    __tablename__ = "users"
+class TenantUser(BaseModel):
+    __tablename__ = "tenant_users"
     __table_args__ = (
         UniqueConstraint("name", "tenant_id"),
         {"comment": "ユーザー", "info": {}},
@@ -101,7 +101,7 @@ class User(BaseModel):
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
 
-    tenant = relationship("Tenant", back_populates="users")
+    tenant = relationship("Tenant", back_populates="tenant_users")
     posts = relationship("Post", back_populates="posted_by", cascade="all", passive_deletes=True)
 
 
@@ -115,7 +115,7 @@ class Post(BaseModel):
     title = Column(String(255), nullable=False)
     detail = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
-    posted_by_id = Column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    posted_by_id = Column(String(36), ForeignKey("tenant_users.id", ondelete="CASCADE"), nullable=False)
 
     tenant = relationship("Tenant", back_populates="posts")
-    posted_by = relationship("User", back_populates="posts")
+    posted_by = relationship("TenantUser", back_populates="posts")

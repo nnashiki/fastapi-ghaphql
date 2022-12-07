@@ -1,7 +1,7 @@
 import strawberry
 
 from .tenant import Tenant
-from .user import User
+from .tenant_user import TenantUser
 
 
 @strawberry.type
@@ -10,4 +10,4 @@ class Post:
     title: str
     detail: str
     tenant: Tenant
-    posted_by: User
+    posted_by: TenantUser
