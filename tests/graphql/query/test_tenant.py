@@ -3,7 +3,7 @@ from tests.util import create_tenant_and_users
 
 class TestTenantQueries:
     def test_tenant_query_with_id(self, session, app_client):
-        tenant, team, user = create_tenant_and_users(session)
+        tenant, user = create_tenant_and_users(session)
         query = """
             query {
               tenant(tenantId: "%s") {
