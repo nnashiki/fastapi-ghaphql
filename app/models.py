@@ -103,6 +103,12 @@ class TenantUser(BaseModel):
 
     tenant = relationship("Tenant", back_populates="tenant_users")
     posts = relationship("Post", back_populates="posted_by", cascade="all", passive_deletes=True)
+    post_likes = relationship(
+        "PostLike", back_populates="tenant_user", cascade="all", passive_deletes=True, lazy="joined"
+    )
+    post_comments = relationship(
+        "PostComment", back_populates="tenant_user", cascade="all", passive_deletes=True, lazy="joined"
+    )
 
 
 class Post(BaseModel):
@@ -119,3 +125,34 @@ class Post(BaseModel):
 
     tenant = relationship("Tenant", back_populates="posts")
     posted_by = relationship("TenantUser", back_populates="posts")
+    post_likes = relationship("PostLike", back_populates="post", cascade="all", passive_deletes=True)
+    post_comments = relationship("PostComment", back_populates="post", cascade="all", passive_deletes=True)
+
+
+class PostLike(BaseModel):
+    __tablename__ = "post_likes"
+    __table_args__ = (
+        UniqueConstraint("post_id", "tenant_user_id"),
+        {"comment": "投稿いいね", "info": {}},
+    )
+    id = Column(BigInteger, primary_key=True)
+    post_id = Column(BigInteger, ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
+    tenant_user_id = Column(String(36), ForeignKey("tenant_users.id", ondelete="CASCADE"), nullable=False)
+
+    post = relationship("Post", back_populates="post_likes")
+    tenant_user = relationship("TenantUser", back_populates="post_likes")
+
+
+class PostComment(BaseModel):
+    __tablename__ = "post_comments"
+    __table_args__ = (
+        UniqueConstraint("post_id", "tenant_user_id"),
+        {"comment": "投稿コメント", "info": {}},
+    )
+    id = Column(BigInteger, primary_key=True)
+    post_id = Column(BigInteger, ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
+    tenant_user_id = Column(String(36), ForeignKey("tenant_users.id", ondelete="CASCADE"), nullable=False)
+    comment = Column(String(255), nullable=False)
+
+    post = relationship("Post", back_populates="post_comments")
+    tenant_user = relationship("TenantUser", back_populates="post_comments")
