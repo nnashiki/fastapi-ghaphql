@@ -1,0 +1,99 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/graphql": {
+            "get": {
+                "summary": "Handle Http Get",
+                "operationId": "handle_http_get_graphql_get",
+                "responses": {
+                    "200": {
+                        "description": "The GraphiQL integrated development environment.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found if GraphiQL is not enabled."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Handle Http Post",
+                "operationId": "handle_http_post_graphql_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/": {
+            "get": {
+                "tags": [
+                    "api users"
+                ],
+                "summary": "Read Users",
+                "operationId": "read_users_api_users__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/exception": {
+            "get": {
+                "tags": [
+                    "api users"
+                ],
+                "summary": "Read Users Exception",
+                "operationId": "read_users_exception_api_users_exception_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/super/users/": {
+            "get": {
+                "tags": [
+                    "super users"
+                ],
+                "summary": "Read Users",
+                "operationId": "read_users_super_users__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
