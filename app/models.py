@@ -36,6 +36,7 @@ class ServicePlan(BaseModel):
     name = Column(String(255), nullable=False)
 
     tenants = relationship("Tenant", back_populates="service_plan")
+    roles = relationship("Role", back_populates="service_plan")
 
 
 class Right(BaseModel):
@@ -59,6 +60,10 @@ class Role(BaseModel):
     )
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+    service_plan_id = Column(Integer, ForeignKey("service_plans.id"), nullable=False)
+
+    service_plan = relationship("ServicePlan", back_populates="roles")
+    tenant_users = relationship("TenantUser", back_populates="role")
 
 
 class RightRoleMapping(BaseModel):
@@ -100,8 +105,10 @@ class TenantUser(BaseModel):
     id = Column(String(36), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
+    role_id = Column(Integer, ForeignKey("roles.id"), nullable=False)
 
     tenant = relationship("Tenant", back_populates="tenant_users")
+    role = relationship("Role", back_populates="tenant_users")
     posts = relationship("Post", back_populates="posted_by", cascade="all", passive_deletes=True)
     post_likes = relationship(
         "PostLike", back_populates="tenant_user", cascade="all", passive_deletes=True, lazy="joined"

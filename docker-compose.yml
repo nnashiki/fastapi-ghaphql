@@ -39,4 +39,4 @@ volumes:
     external: false
 networks:
   default:
-    name: sqlalchemy-sandbox
+    name: fastapi-graphql
