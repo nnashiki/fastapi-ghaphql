@@ -247,15 +247,25 @@ def post_upgrade():
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
     )
+    # tenant に紐づく権限
     create_tenant_right_id = 1
     read_tenant_right_id = 2
     update_tenant_right_id = 3
     delete_tenant_right_id = 4
+    # tenant_user に紐づく権限
+    create_tenant_user_right_id = 5
+    read_tenant_user_right_id = 6
+    update_tenant_user_right_id = 7
+    delete_tenant_user_right_id = 8
     rights_data = [
         {"id": create_tenant_right_id, "name": "create.tenant"},
         {"id": read_tenant_right_id, "name": "read.tenant"},
         {"id": update_tenant_right_id, "name": "update.tenant"},
         {"id": delete_tenant_right_id, "name": "delete.tenant"},
+        {"id": create_tenant_user_right_id, "name": "create.tenant_user"},
+        {"id": read_tenant_user_right_id, "name": "read.tenant_user"},
+        {"id": update_tenant_user_right_id, "name": "update.tenant_user"},
+        {"id": delete_tenant_user_right_id, "name": "delete.tenant_user"},
     ]
     op.bulk_insert(
         rights,
@@ -299,6 +309,20 @@ def post_upgrade():
         {"id": 2, "role_id": super_user_role_id, "right_id": read_tenant_right_id},
         {"id": 3, "role_id": super_user_role_id, "right_id": update_tenant_right_id},
         {"id": 4, "role_id": super_user_role_id, "right_id": delete_tenant_right_id},
+        {"id": 5, "role_id": free_tenant_member_role_id, "right_id": read_tenant_user_right_id},
+        {"id": 6, "role_id": free_tenant_admin_role_id, "right_id": create_tenant_user_right_id},
+        {"id": 7, "role_id": free_tenant_admin_role_id, "right_id": read_tenant_user_right_id},
+        {"id": 8, "role_id": free_tenant_admin_role_id, "right_id": update_tenant_user_right_id},
+        {"id": 9, "role_id": free_tenant_admin_role_id, "right_id": delete_tenant_user_right_id},
+        {"id": 10, "role_id": basic_tenant_member_role_id, "right_id": read_tenant_user_right_id},
+        {"id": 11, "role_id": basic_tenant_admin_role_id, "right_id": create_tenant_user_right_id},
+        {"id": 12, "role_id": basic_tenant_admin_role_id, "right_id": read_tenant_user_right_id},
+        {"id": 13, "role_id": basic_tenant_admin_role_id, "right_id": update_tenant_user_right_id},
+        {"id": 14, "role_id": basic_tenant_admin_role_id, "right_id": delete_tenant_user_right_id},
+        {"id": 15, "role_id": super_user_role_id, "right_id": read_tenant_user_right_id},
+        {"id": 16, "role_id": super_user_role_id, "right_id": create_tenant_user_right_id},
+        {"id": 17, "role_id": super_user_role_id, "right_id": update_tenant_user_right_id},
+        {"id": 18, "role_id": super_user_role_id, "right_id": delete_tenant_user_right_id},
     ]
     op.bulk_insert(
         right_role_mappings,
