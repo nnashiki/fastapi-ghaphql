@@ -73,8 +73,8 @@ class RightRoleMapping(BaseModel):
         {"comment": "権限ロールマッピング", "info": {}},
     )
     id = Column(Integer, primary_key=True)
-    right_id = Column(Integer, ForeignKey("rights.id", ondelete="CASCADE"), nullable=False)
     role_id = Column(Integer, ForeignKey("roles.id", ondelete="CASCADE"), nullable=False)
+    right_id = Column(Integer, ForeignKey("rights.id", ondelete="CASCADE"), nullable=False)
 
 
 class Tenant(BaseModel):
