@@ -76,8 +76,8 @@ def upgrade() -> None:
     op.create_table(
         "right_role_mappings",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("right_id", sa.Integer(), nullable=False),
         sa.Column("role_id", sa.Integer(), nullable=False),
+        sa.Column("right_id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(
@@ -226,7 +226,7 @@ def post_upgrade():
     # スキーマ更新後に実行する必要がある処理
     service_plans = sa.table(
         "service_plans",
-        sa.column("id", sa.String(length=36)),
+        sa.column("id", sa.Integer),
         sa.column("name", sa.String(length=255)),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
@@ -234,17 +234,87 @@ def post_upgrade():
     op.bulk_insert(
         service_plans,
         [
-            {"id": "1", "name": "free", "created_at": datetime.now(), "updated_at": datetime.now()},
-            {"id": "2", "name": "basic", "created_at": datetime.now(), "updated_at": datetime.now()},
-            {"id": "99", "name": "suspended", "created_at": datetime.now(), "updated_at": datetime.now()},
-            {"id": "100", "name": "super", "created_at": datetime.now(), "updated_at": datetime.now()},
+            {"id": 1, "name": "free", "created_at": datetime.now(), "updated_at": datetime.now()},
+            {"id": 2, "name": "basic", "created_at": datetime.now(), "updated_at": datetime.now()},
+            {"id": 99, "name": "suspended", "created_at": datetime.now(), "updated_at": datetime.now()},
+            {"id": 777, "name": "super", "created_at": datetime.now(), "updated_at": datetime.now()},
+        ],
+    )
+    rights = sa.table(
+        "rights",
+        sa.column("id", sa.Integer),
+        sa.column("name", sa.String(length=255)),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(), nullable=False),
+    )
+    create_tenant_right_id = 1
+    read_tenant_right_id = 2
+    update_tenant_right_id = 3
+    delete_tenant_right_id = 4
+    rights_data = [
+        {"id": create_tenant_right_id, "name": "create.tenant"},
+        {"id": read_tenant_right_id, "name": "read.tenant"},
+        {"id": update_tenant_right_id, "name": "update.tenant"},
+        {"id": delete_tenant_right_id, "name": "delete.tenant"},
+    ]
+    op.bulk_insert(
+        rights,
+        [dict({"created_at": datetime.now(), "updated_at": datetime.now()}, **row) for row in rights_data],
+    )
+    roles = sa.table(
+        "roles",
+        sa.column("id", sa.Integer),
+        sa.column("name", sa.String(length=255)),
+        sa.Column("service_plan_id", sa.Integer, nullable=False),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(), nullable=False),
+    )
+    free_tenant_member_role_id = 1
+    free_tenant_admin_role_id = 2
+    basic_tenant_member_role_id = 3
+    basic_tenant_admin_role_id = 4
+    super_user_role_id = 777
+    roles_data = [
+        {"id": free_tenant_member_role_id, "name": "free_tenant_member", "service_plan_id": 1},
+        {"id": free_tenant_admin_role_id, "name": "free_tenant_admin", "service_plan_id": 1},
+        {"id": basic_tenant_member_role_id, "name": "basic_tenant_member", "service_plan_id": 2},
+        {"id": basic_tenant_admin_role_id, "name": "basic_tenant_admin", "service_plan_id": 2},
+        {"id": 99, "name": "suspended_user", "service_plan_id": 99},
+        {"id": super_user_role_id, "name": "super_user", "service_plan_id": 777},
+    ]
+    op.bulk_insert(
+        roles,
+        [dict({"created_at": datetime.now(), "updated_at": datetime.now()}, **row) for row in roles_data],
+    )
+    right_role_mappings = sa.table(
+        "right_role_mappings",
+        sa.column("id", sa.Integer),
+        sa.column("role_id", sa.Integer),
+        sa.column("right_id", sa.Integer),
+        sa.Column("created_at", sa.DateTime(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(), nullable=False),
+    )
+    right_role_mappings_data = [
+        {"id": 1, "role_id": super_user_role_id, "right_id": create_tenant_right_id},
+        {"id": 2, "role_id": super_user_role_id, "right_id": read_tenant_right_id},
+        {"id": 3, "role_id": super_user_role_id, "right_id": update_tenant_right_id},
+        {"id": 4, "role_id": super_user_role_id, "right_id": delete_tenant_right_id},
+    ]
+    op.bulk_insert(
+        right_role_mappings,
+        [
+            dict({"created_at": datetime.now(), "updated_at": datetime.now()}, **row)
+            for row in right_role_mappings_data
         ],
     )
 
 
 def pre_downgrade():
     # スキーマ更新前に実行する必要がある処理
-    pass
+    op.execute("DELETE FROM right_role_mappings")
+    op.execute("DELETE FROM roles")
+    op.execute("DELETE FROM rights")
+    op.execute("DELETE FROM service_plans")
 
 
 def post_downgrade():
