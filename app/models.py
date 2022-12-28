@@ -47,6 +47,7 @@ class Right(BaseModel):
     )
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+    roles = relationship("Role", secondary="right_role_mappings", back_populates="rights")
 
 
 class Role(BaseModel):
@@ -64,6 +65,7 @@ class Role(BaseModel):
 
     service_plan = relationship("ServicePlan", back_populates="roles")
     tenant_users = relationship("TenantUser", back_populates="role")
+    rights = relationship("Right", secondary="right_role_mappings", back_populates="roles")
 
 
 class RightRoleMapping(BaseModel):
