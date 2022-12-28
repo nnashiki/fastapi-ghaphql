@@ -2,7 +2,7 @@
 
 Revision ID: 0002
 Revises: 0001
-Create Date: 2022-12-22 22:58:43.620569+09:00
+Create Date: 2022-12-28 11:05:28.936820+09:00
 
 """
 from datetime import datetime
