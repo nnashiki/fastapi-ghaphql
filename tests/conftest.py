@@ -9,7 +9,6 @@ def init_tables(session):
     # 初期化
     session.query(models.TenantUser).delete()
     session.query(models.Tenant).delete()
-    session.query(models.ServicePlan).delete()
     session.commit()
 
 
@@ -28,6 +27,60 @@ def session():
         sa_session.close()
 
 
+class CustomTestClient(TestClient):
+    token = ""
+
+    def get(self, *args, **kwargs):
+        if self.token:
+            if "headers" in kwargs.keys():
+                kwargs["headers"].update({"Authorization": f"Bearer {self.token}"})
+            else:
+                kwargs["headers"] = {"Authorization": f"Bearer {self.token}"}
+            return super().get(*args, **kwargs)
+        else:
+            return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        if self.token:
+            if "headers" in kwargs.keys():
+                kwargs["headers"].update({"Authorization": f"Bearer {self.token}"})
+            else:
+                kwargs["headers"] = {"Authorization": f"Bearer {self.token}"}
+            return super().post(*args, **kwargs)
+        else:
+            return super().post(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.token:
+            if "headers" in kwargs.keys():
+                kwargs["headers"].update({"Authorization": f"Bearer {self.token}"})
+            else:
+                kwargs["headers"] = {"Authorization": f"Bearer {self.token}"}
+            return super().delete(*args, **kwargs)
+        else:
+            return super().delete(*args, **kwargs)
+
+    def patch(self, *args, **kwargs):
+        if self.token:
+            if "headers" in kwargs.keys():
+                kwargs["headers"].update({"Authorization": f"Bearer {self.token}"})
+            else:
+                kwargs["headers"] = {"Authorization": f"Bearer {self.token}"}
+            return super().patch(*args, **kwargs)
+        else:
+            return super().patch(*args, **kwargs)
+
+    def put(self, *args, **kwargs):
+        if self.token:
+            if "headers" in kwargs.keys():
+                kwargs["headers"].update({"Authorization": f"Bearer {self.token}"})
+            else:
+                kwargs["headers"] = {"Authorization": f"Bearer {self.token}"}
+            return super().put(*args, **kwargs)
+        else:
+            return super().put(*args, **kwargs)
+
+
 @pytest.fixture()
 def app_client():
-    yield TestClient(app=app)
+    yield CustomTestClient(app=app)

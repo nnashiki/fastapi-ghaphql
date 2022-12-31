@@ -11,7 +11,7 @@ def read_my_tenant(db: Session) -> Tenant:
 
 
 def create_tenant(db: Session, name: str) -> Tenant:
-    tenant = Tenant(name=name)
+    tenant = Tenant(name=name, service_plan_id=1)
     db.add(tenant)
     db.commit()
     tenant = db.query(Tenant).filter(Tenant.name == name).one()
