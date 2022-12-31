@@ -100,6 +100,7 @@ def upgrade() -> None:
         "tenant_users",
         sa.Column("id", sa.String(length=36), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
+        sa.Column("idaas_id", sa.String(length=36), nullable=False),
         sa.Column("tenant_id", sa.String(length=36), nullable=False),
         sa.Column("role_id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
