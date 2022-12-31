@@ -106,6 +106,7 @@ class TenantUser(BaseModel):
     )
     id = Column(String(36), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
+    idaas_id = Column(String(36), nullable=False)
     tenant_id = Column(String(36), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False)
     role_id = Column(Integer, ForeignKey("roles.id"), nullable=False)
 

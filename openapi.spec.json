@@ -94,6 +94,43 @@
                     }
                 }
             }
+        },
+        "/super/tenants/": {
+            "post": {
+                "tags": [
+                    "super tenants"
+                ],
+                "summary": "Create Tenant",
+                "operationId": "create_tenant_super_tenants__post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "OAuth2PasswordBearer": {
+                "type": "oauth2",
+                "flows": {
+                    "password": {
+                        "scopes": {},
+                        "tokenUrl": "token"
+                    }
+                }
+            }
         }
     }
 }
