@@ -10,12 +10,12 @@ def read_my_tenant(db: Session) -> Tenant:
     return tenant
 
 
-def create_tenant(db: Session, name: str) -> Tenant:
-    tenant = Tenant(name=name, service_plan_id=1)
+def create_tenant(db: Session, name: str, service_plan_id: int) -> Tenant:
+    tenant = Tenant(name=name, service_plan_id=service_plan_id)
     db.add(tenant)
     db.commit()
-    tenant = db.query(Tenant).filter(Tenant.name == name).one()
-    return tenant
+    new_tenant = db.query(Tenant).filter(Tenant.name == name).one()
+    return new_tenant
 
 
 def read_tenant(db: Session, tenant_id: uuid.UUID) -> Tenant:

@@ -64,6 +64,7 @@ init = { cmd = "/wait && alembic upgrade head && task test"}
 
 serve = "uvicorn app.main:app --reload --host 0.0.0.0"
 test = "pytest . -s"
+test_debug = "python -m debugpy --wait-for-client --listen 5679 -m pytest tests/routers/super/test_tenants.py -s"
 load_data_local = "python -m tools.fixtures.development"
 reset_db = "alembic downgrade 0001 && alembic upgrade head"
 export = "poetry export -f requirements.txt --output ./requirements.txt"
