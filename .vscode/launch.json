@@ -18,6 +18,24 @@
                 }
             ],
             "justMyCode": false
-        }
+        },
+        {
+            "name": "Pytest debug",
+            "type": "python",
+            "request": "attach",
+            "port": 5679,
+            "host": "localhost",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/app",
+                    "remoteRoot": "/var/www/apps"
+                },
+                {
+                    "localRoot": "${workspaceFolder}/.venv",
+                    "remoteRoot": "/var/www/.venv"
+                }
+            ],
+            "justMyCode": false
+         }
     ]
 }

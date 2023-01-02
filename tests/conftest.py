@@ -1,7 +1,12 @@
+import uuid
+
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-from app import database, models
+from app import models
+from app.database import engine, get_db
 from app.main import app
 
 
@@ -12,13 +17,30 @@ def init_tables(session):
     session.commit()
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def session():
     """
     テストメソッドが使うためのsession
     """
 
-    sa_session = database.get_session_maker()()
+    function_scope = uuid.uuid4().hex
+    TestingSessionLocal = scoped_session(
+        sessionmaker(autocommit=False, autoflush=False, bind=engine),
+        scopefunc=lambda: function_scope,
+    )
+
+    def override_get_db():
+        # API側で使う session id を同じにする(scoped_session)
+        testing_session_local = TestingSessionLocal()
+        try:
+            yield testing_session_local
+            testing_session_local.commit()
+        except SQLAlchemyError:
+            testing_session_local.rollback()
+
+    app.dependency_overrides[get_db] = override_get_db
+
+    sa_session = TestingSessionLocal()
     try:
         init_tables(sa_session)
         yield sa_session
