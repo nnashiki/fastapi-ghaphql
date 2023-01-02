@@ -2,6 +2,7 @@ import uuid
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from app import models
@@ -29,13 +30,13 @@ def session():
     )
 
     def override_get_db():
-        # こっちはAPI側で使うためのsession設定
+        # API側で使う session id を同じにする(scoped_session)
         testing_session_local = TestingSessionLocal()
         try:
             yield testing_session_local
             testing_session_local.commit()
-        finally:
-            testing_session_local.close()
+        except SQLAlchemyError:
+            testing_session_local.rollback()
 
     app.dependency_overrides[get_db] = override_get_db
 
