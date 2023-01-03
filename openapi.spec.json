@@ -38,13 +38,13 @@
                 }
             }
         },
-        "/api/tenant-users/": {
+        "/api/tenant-users": {
             "get": {
                 "tags": [
                     "tenant users"
                 ],
                 "summary": "Read Users",
-                "operationId": "read_users_api_tenant_users__get",
+                "operationId": "read_users_api_tenant_users_get",
                 "parameters": [
                     {
                         "required": false,
@@ -62,7 +62,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Read Users Api Tenant Users  Get",
+                                    "title": "Response Read Users Api Tenant Users Get",
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/TenantUserResponse"
@@ -89,13 +89,13 @@
                 ]
             }
         },
-        "/super/users/": {
+        "/super/users": {
             "get": {
                 "tags": [
                     "super users"
                 ],
                 "summary": "Read Users",
-                "operationId": "read_users_super_users__get",
+                "operationId": "read_users_super_users_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -108,13 +108,13 @@
                 }
             }
         },
-        "/super/tenants/": {
+        "/super/tenants": {
             "get": {
                 "tags": [
                     "super tenants"
                 ],
                 "summary": "Read Tenants",
-                "operationId": "read_tenants_super_tenants__get",
+                "operationId": "read_tenants_super_tenants_get",
                 "parameters": [
                     {
                         "required": true,
@@ -157,7 +157,7 @@
                     "super tenants"
                 ],
                 "summary": "Create Tenant",
-                "operationId": "create_tenant_super_tenants__post",
+                "operationId": "create_tenant_super_tenants_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
