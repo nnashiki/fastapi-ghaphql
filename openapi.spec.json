@@ -89,25 +89,6 @@
                 ]
             }
         },
-        "/api/tenant-users/exception": {
-            "get": {
-                "tags": [
-                    "tenant users"
-                ],
-                "summary": "Read Users Exception",
-                "operationId": "read_users_exception_api_tenant_users_exception_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/super/users/": {
             "get": {
                 "tags": [

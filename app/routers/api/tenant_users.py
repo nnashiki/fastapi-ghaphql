@@ -22,8 +22,3 @@ async def read_users(
     if not has_any_rights(my_rights=my_rights, require_rights=[Right(name="read.tenant_user")]):
         raise exceptions.NoRightsException
     return usecases.tenant_user.read_users(db=db, name=query_param.name)
-
-
-@router.get("/exception")
-async def read_users_exception():
-    raise exceptions.MyException()

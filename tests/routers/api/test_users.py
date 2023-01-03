@@ -25,9 +25,3 @@ class TestGet:
         assert result[1]["name"] in tenant_user_names
         assert result[2]["name"] in tenant_user_names
         assert result[3]["name"] in tenant_user_names
-
-
-def test_hello_exception(app_client):
-    response = app_client.get("api/users/exception")
-    assert response.status_code == 500
-    assert response.json() == "hoge"
