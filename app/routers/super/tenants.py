@@ -6,7 +6,7 @@ from app.exceptions import NoRightsException
 from app.models import Right
 from app.schemas.tenant import (
     CreateTenantRequestBody,
-    ReadManyTenantsRequestQueryParam,
+    ReadTenantsRequestQueryParam,
     TenantResponse,
 )
 from app.services.authorization import has_any_rights
@@ -33,11 +33,11 @@ def create_tenant(
 
 
 @router.get("/")
-def read_many_tenants(
+def read_tenants(
     session: SuperSession = Depends(get_super_db),
-    query_param: ReadManyTenantsRequestQueryParam = Depends(),
+    query_param: ReadTenantsRequestQueryParam = Depends(),
     my_rights: list[Right] = Depends(get_my_rights),
 ) -> list[TenantResponse]:
     if not has_any_rights(my_rights=my_rights, require_rights=[Right(name="read.tenant")]):
         return []
-    return tenant.read_many_tenants(session, name=query_param.name)
+    return tenant.read_tenants(session, name=query_param.name)

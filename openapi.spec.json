@@ -38,32 +38,64 @@
                 }
             }
         },
-        "/api/users/": {
+        "/api/tenant-users/": {
             "get": {
                 "tags": [
-                    "api users"
+                    "tenant users"
                 ],
                 "summary": "Read Users",
-                "operationId": "read_users_api_users__get",
+                "operationId": "read_users_api_tenant_users__get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Name",
+                            "type": "string"
+                        },
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "title": "Response Read Users Api Tenant Users  Get",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TenantUserResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
             }
         },
-        "/api/users/exception": {
+        "/api/tenant-users/exception": {
             "get": {
                 "tags": [
-                    "api users"
+                    "tenant users"
                 ],
                 "summary": "Read Users Exception",
-                "operationId": "read_users_exception_api_users_exception_get",
+                "operationId": "read_users_exception_api_tenant_users_exception_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -100,8 +132,8 @@
                 "tags": [
                     "super tenants"
                 ],
-                "summary": "Read Many Tenants",
-                "operationId": "read_many_tenants_super_tenants__get",
+                "summary": "Read Tenants",
+                "operationId": "read_tenants_super_tenants__get",
                 "parameters": [
                     {
                         "required": true,
@@ -213,6 +245,36 @@
                         "items": {
                             "$ref": "#/components/schemas/ValidationError"
                         }
+                    }
+                }
+            },
+            "TenantUserResponse": {
+                "title": "TenantUserResponse",
+                "required": [
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "created_at": {
+                        "title": "Created At",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
                     }
                 }
             },
