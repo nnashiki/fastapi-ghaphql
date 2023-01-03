@@ -4,7 +4,11 @@ from app.database import SuperSession, get_super_db
 from app.dependencies import get_my_rights
 from app.exceptions import NoRightsException
 from app.models import Right
-from app.schemas.tenant import CreateTenantRequestBody, ReadManyTenantsRequestQueryParam, TenantResponse
+from app.schemas.tenant import (
+    CreateTenantRequestBody,
+    ReadManyTenantsRequestQueryParam,
+    TenantResponse,
+)
 from app.services.authorization import has_any_rights
 from app.usecases import tenant
 
