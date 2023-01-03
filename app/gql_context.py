@@ -2,7 +2,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 from strawberry.fastapi import BaseContext
 
-from app.database import get_db
+from app.database import get_tenant_db
 
 
 class CustomContext(BaseContext):
@@ -12,7 +12,7 @@ class CustomContext(BaseContext):
 
 
 def get_custom_context_dependency(
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_tenant_db),
 ) -> CustomContext:
     return CustomContext(db=db)
 

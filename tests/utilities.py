@@ -38,13 +38,13 @@ class TestTenantUsers(BaseModel):
         arbitrary_types_allowed = True
 
 
-def free_tenant_users(session: Session, tenant_name: str):
+def free_tenant_users(session: Session, tenant_name: str) -> TestTenantUsers:
     """
     free plan のテナントユーザーを作成する
     """
     tenant = Tenant(
         name=tenant_name,
-        service_plan_id=777,
+        service_plan_id=1,
     )
     session.add(tenant)
     session.commit()

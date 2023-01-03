@@ -6,11 +6,11 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from app import models
-from app.database import engine, get_db
+from app.database import engine, get_tenant_db
 from app.main import app
 
 
-def init_tables(session):
+def _init_tables(session):
     # 初期化
     session.query(models.TenantUser).delete()
     session.query(models.Tenant).delete()
@@ -38,11 +38,11 @@ def session():
         except SQLAlchemyError:
             testing_session_local.rollback()
 
-    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_tenant_db] = override_get_db
 
     sa_session = TestingSessionLocal()
     try:
-        init_tables(sa_session)
+        _init_tables(sa_session)
         yield sa_session
 
     finally:

@@ -5,7 +5,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-from app.database import get_db
+from app.database import get_tenant_db
 from app.models import Right, TenantUser
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -25,7 +25,7 @@ def get_jwt_payload(token: str = Depends(oauth2_scheme)) -> dict[str, Any]:
 
 def get_user_from_jwt_payload(
     payload: dict[str, Any] = Depends(get_jwt_payload),
-    session: Session = Depends(get_db),
+    session: Session = Depends(get_tenant_db),
 ) -> TenantUser:
     """
     JWTトークン payload からユーザーを取得する

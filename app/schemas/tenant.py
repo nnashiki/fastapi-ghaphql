@@ -6,8 +6,8 @@ class CreateTenantRequestBody(BaseModel):
     service_plan_id: int
 
 
-class ReadTenantRequestQueryParam(BaseModel):
-    pass
+class ReadManyTenantsRequestQueryParam(BaseModel):
+    name: str
 
 
 class UpdateTenantRequestBody(BaseModel):
