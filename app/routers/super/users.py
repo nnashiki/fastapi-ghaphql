@@ -6,6 +6,6 @@ router = APIRouter(
 )
 
 
-@router.get("/")
+@router.get("")
 async def read_users():
     return {"message": "Hello World"}

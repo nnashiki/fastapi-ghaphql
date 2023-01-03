@@ -18,7 +18,7 @@ router = APIRouter(
 )
 
 
-@router.post("/")
+@router.post("")
 def create_tenant(
     create_tenants_request_body: CreateTenantRequestBody,
     session: SuperSession = Depends(get_super_db),
@@ -32,7 +32,7 @@ def create_tenant(
     return None
 
 
-@router.get("/")
+@router.get("")
 def read_tenants(
     session: SuperSession = Depends(get_super_db),
     query_param: ReadTenantsRequestQueryParam = Depends(),

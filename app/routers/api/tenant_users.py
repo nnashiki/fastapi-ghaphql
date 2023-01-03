@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=list[TenantUserResponse])
+@router.get("", response_model=list[TenantUserResponse])
 async def read_users(
     query_param: ReadTenantUsersRequestQueryParam = Depends(),
     session: TenantSession = Depends(get_tenant_db),
