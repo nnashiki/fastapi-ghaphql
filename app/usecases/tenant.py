@@ -25,7 +25,7 @@ def read_tenant(db: Session, tenant_id: uuid.UUID) -> Tenant:
     return tenant
 
 
-def read_many_tenants(db: SuperSession, name: Optional[str]) -> list[Tenant]:
+def read_tenants(db: SuperSession, name: Optional[str]) -> list[Tenant]:
     tenants_query = db.query(Tenant)
     if name:
         tenants_query = tenants_query.filter(Tenant.name == name)

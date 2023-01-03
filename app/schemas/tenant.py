@@ -8,7 +8,7 @@ class CreateTenantRequestBody(BaseModel):
     service_plan_id: int
 
 
-class ReadManyTenantsRequestQueryParam(BaseModel):
+class ReadTenantsRequestQueryParam(BaseModel):
     name: str
 
 
