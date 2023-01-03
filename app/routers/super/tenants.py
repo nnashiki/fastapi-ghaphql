@@ -24,7 +24,7 @@ def create_tenant(
     session: SuperSession = Depends(get_super_db),
     my_rights: list[Right] = Depends(get_my_rights),
 ) -> None:
-    if not has_any_rights(my_rights=my_rights, require_rights=[Right(name="create.tenant")]):
+    if not has_any_rights(session=session, my_rights=my_rights, require_rights=["create.tenant"]):
         raise NoRightsException
     _ = tenant.create_tenant(
         session, name=create_tenants_request_body.name, service_plan_id=create_tenants_request_body.service_plan_id
@@ -38,6 +38,6 @@ def read_tenants(
     query_param: ReadTenantsRequestQueryParam = Depends(),
     my_rights: list[Right] = Depends(get_my_rights),
 ) -> list[TenantResponse]:
-    if not has_any_rights(my_rights=my_rights, require_rights=[Right(name="read.tenant")]):
+    if not has_any_rights(session=session, my_rights=my_rights, require_rights=["read.tenant"]):
         return []
     return tenant.read_tenants(session, name=query_param.name)

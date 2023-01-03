@@ -16,9 +16,9 @@ router = APIRouter(
 @router.get("/", response_model=list[TenantUserResponse])
 async def read_users(
     query_param: ReadTenantUsersRequestQueryParam = Depends(),
-    db: TenantSession = Depends(get_tenant_db),
+    session: TenantSession = Depends(get_tenant_db),
     my_rights: list[Right] = Depends(get_my_rights),
 ):
-    if not has_any_rights(my_rights=my_rights, require_rights=[Right(name="read.tenant_user")]):
+    if not has_any_rights(session=session, my_rights=my_rights, require_rights=["read.tenant_user"]):
         raise exceptions.NoRightsException
-    return usecases.tenant_user.read_users(db=db, name=query_param.name)
+    return usecases.tenant_user.read_users(session=session, name=query_param.name)
