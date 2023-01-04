@@ -1,11 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel
-
-from .base import AppResponseBaseModel
+from .base import AppRequestBaseModel, AppResponseBaseModel
 
 
-class ReadTenantUsersRequestQueryParam(BaseModel):
+class ReadTenantUsersRequestQueryParam(AppRequestBaseModel):
     name: Optional[str]
 
 
