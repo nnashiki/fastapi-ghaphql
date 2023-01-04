@@ -1,18 +1,18 @@
 from pydantic import BaseModel
 
-from .base import AppResponseBaseModel
+from .base import AppRequestBaseModel, AppResponseBaseModel
 
 
-class CreateTenantRequestBody(BaseModel):
+class CreateTenantRequestBody(AppRequestBaseModel):
     name: str
     service_plan_id: int
 
 
-class ReadTenantsRequestQueryParam(BaseModel):
+class ReadTenantsRequestQueryParam(AppRequestBaseModel):
     name: str
 
 
-class UpdateTenantRequestBody(BaseModel):
+class UpdateTenantRequestBody(AppRequestBaseModel):
     name: str
 
 
