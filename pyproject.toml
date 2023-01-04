@@ -54,7 +54,7 @@ exclude = '''
 profile = "black"
 
 [tool.taskipy.variables]
-python_src_dir = "app tests migrations"
+python_src_dir = "app app_tests migrations"
 flake_ignore = "E501,E203,W503,W504"
 
 [tool.taskipy.tasks]

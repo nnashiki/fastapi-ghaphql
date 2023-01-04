@@ -5,7 +5,7 @@ from pydantic import validator
 
 from app.main import app
 from app.schemas import base
-from tests.utilities import free_tenant_users, login
+from app_tests.utilities import free_tenant_users, login
 
 
 class TestAppResponseBaseModel:
