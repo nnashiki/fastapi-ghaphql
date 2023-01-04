@@ -1,7 +1,7 @@
 from sqlalchemy.orm import joinedload
 
 from app import models
-from tests.util import create_tenant_and_users
+from app_tests.util import create_tenant_and_users
 
 
 class TestUsers:

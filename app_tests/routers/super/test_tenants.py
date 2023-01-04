@@ -1,5 +1,5 @@
 from app.models import Tenant
-from tests.utilities import create_super_tenant_user, free_tenant_users, login
+from app_tests.utilities import create_super_tenant_user, free_tenant_users, login
 
 
 class TestCreate:

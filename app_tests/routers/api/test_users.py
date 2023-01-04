@@ -1,4 +1,4 @@
-from tests.utilities import free_tenant_users, login
+from app_tests.utilities import free_tenant_users, login
 
 
 class TestGet:
