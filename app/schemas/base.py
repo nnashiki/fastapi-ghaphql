@@ -1,6 +1,7 @@
 import datetime
 from datetime import timezone
 
+import humps
 from pydantic import BaseModel, validator
 
 
@@ -22,6 +23,10 @@ def normalize_datetime(dt: datetime.datetime) -> datetime.datetime:
     return dt
 
 
+def _to_camel(string: str) -> str:
+    return humps.camelize(string)
+
+
 class AppResponseBaseModel(BaseModel):
     created_at: datetime.datetime
     updated_at: datetime.datetime
@@ -32,6 +37,8 @@ class AppResponseBaseModel(BaseModel):
 
     class Config:
         orm_mode = True
+        alias_generator = _to_camel
+        allow_population_by_field_name = True
         json_encoders = {
             # custom output conversion for datetime
             datetime.datetime: convert_datetime_to_iso_8601_with_z_suffix
