@@ -20,5 +20,5 @@ class Mutation:
         return usecases.tenant.update_tenant(db=ctx.context.db, tenant_id=input_type.id, name=input_type.name)
 
     @strawberry.field
-    def delete_tenant(self, ctx: Info[CustomContext, None], tenant_id: uuid.UUID) -> None:
+    def delete_tenant(self, ctx: Info[CustomContext, None], tenant_id: uuid.UUID) -> bool:
         return usecases.tenant.delete_tenant(db=ctx.context.db, tenant_id=tenant_id)
