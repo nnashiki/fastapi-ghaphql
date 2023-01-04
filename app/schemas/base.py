@@ -43,3 +43,9 @@ class AppResponseBaseModel(BaseModel):
             # custom output conversion for datetime
             datetime.datetime: convert_datetime_to_iso_8601_with_z_suffix
         }
+
+
+class AppRequestBaseModel(BaseModel):
+    class Config:
+        alias_generator = _to_camel
+        allow_population_by_field_name = True
