@@ -232,20 +232,20 @@
             "TenantUserResponse": {
                 "title": "TenantUserResponse",
                 "required": [
-                    "created_at",
-                    "updated_at",
+                    "createdAt",
+                    "updatedAt",
                     "id",
                     "name"
                 ],
                 "type": "object",
                 "properties": {
-                    "created_at": {
-                        "title": "Created At",
+                    "createdAt": {
+                        "title": "Createdat",
                         "type": "string",
                         "format": "date-time"
                     },
-                    "updated_at": {
-                        "title": "Updated At",
+                    "updatedAt": {
+                        "title": "Updatedat",
                         "type": "string",
                         "format": "date-time"
                     },
