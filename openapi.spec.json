@@ -202,7 +202,7 @@
                 "title": "CreateTenantRequestBody",
                 "required": [
                     "name",
-                    "service_plan_id"
+                    "servicePlanId"
                 ],
                 "type": "object",
                 "properties": {
@@ -210,8 +210,8 @@
                         "title": "Name",
                         "type": "string"
                     },
-                    "service_plan_id": {
-                        "title": "Service Plan Id",
+                    "servicePlanId": {
+                        "title": "Serviceplanid",
                         "type": "integer"
                     }
                 }
