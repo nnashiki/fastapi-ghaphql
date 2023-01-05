@@ -62,7 +62,7 @@ flake_ignore = "E501,E203,W503,W504"
 # 組み合わせ
 fmt = { cmd = "task black && task isort && task flake8", help = "format code" }
 fmt_check = { cmd = "task black_check && task isort_check && task flake8", help = "format code with check option" }
-init = { cmd = "/wait && alembic upgrade head && task test"}
+init = { cmd = "/wait && alembic upgrade head"}
 
 serve = "uvicorn app.main:app --reload --host 0.0.0.0"
 test = "pytest . -s"
