@@ -14,8 +14,8 @@ jobs:
           docker volume create fastapi-graphql-db-volume
           docker volume create fastapi-graphql-poetry-volume
           docker-compose up -d --build
-          docker-compose exec -T api alembic upgrade head
-          docker-compose exec -T api pytest --cov=./ --cov-report=xml
+          docker-compose exec -T api poetry run alembic upgrade head
+          docker-compose exec -T api poetry run pytest --cov=./ --cov-report=xml
         shell: bash
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
