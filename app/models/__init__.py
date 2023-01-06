@@ -1,3 +1,4 @@
+from ._base import BaseModel
 from .post import Post
 from .post_comment import PostComment
 from .post_like import PostLike
@@ -9,6 +10,7 @@ from .tenant import Tenant
 from .tenant_user import TenantUser
 
 __all__ = [
+    "BaseModel",
     "ServicePlan",
     "Tenant",
     "TenantUser",
