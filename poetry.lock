@@ -1125,7 +1125,7 @@ greenlet = {version = "!=0.4.17", markers = "python_version >= \"3\" and (platfo
 
 [package.extras]
 aiomysql = ["aiomysql", "greenlet (!=0.4.17)"]
-aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing_extensions (!=3.10.0.1)"]
+aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing-extensions (!=3.10.0.1)"]
 asyncio = ["greenlet (!=0.4.17)"]
 asyncmy = ["asyncmy (>=0.2.3,!=0.2.4)", "greenlet (!=0.4.17)"]
 mariadb-connector = ["mariadb (>=1.0.1,!=1.1.2)"]
@@ -1135,14 +1135,14 @@ mssql-pyodbc = ["pyodbc"]
 mypy = ["mypy (>=0.910)", "sqlalchemy2-stubs"]
 mysql = ["mysqlclient (>=1.4.0)", "mysqlclient (>=1.4.0,<2)"]
 mysql-connector = ["mysql-connector-python"]
-oracle = ["cx_oracle (>=7)", "cx_oracle (>=7,<8)"]
+oracle = ["cx-oracle (>=7)", "cx-oracle (>=7,<8)"]
 postgresql = ["psycopg2 (>=2.7)"]
 postgresql-asyncpg = ["asyncpg", "greenlet (!=0.4.17)"]
 postgresql-pg8000 = ["pg8000 (>=1.16.6,!=1.29.0)"]
 postgresql-psycopg2binary = ["psycopg2-binary"]
 postgresql-psycopg2cffi = ["psycopg2cffi"]
 pymysql = ["pymysql", "pymysql (<1)"]
-sqlcipher = ["sqlcipher3_binary"]
+sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlette"
@@ -1257,14 +1257,14 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "uvicorn"
-version = "0.19.0"
+version = "0.21.0"
 description = "The lightning-fast ASGI server."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "uvicorn-0.19.0-py3-none-any.whl", hash = "sha256:cc277f7e73435748e69e075a721841f7c4a95dba06d12a72fe9874acced16f6f"},
-    {file = "uvicorn-0.19.0.tar.gz", hash = "sha256:cf538f3018536edb1f4a826311137ab4944ed741d52aeb98846f52215de57f25"},
+    {file = "uvicorn-0.21.0-py3-none-any.whl", hash = "sha256:e69e955cb621ae7b75f5590a814a4fcbfb14cb8f44a36dfe3c5c75ab8aee3ad5"},
+    {file = "uvicorn-0.21.0.tar.gz", hash = "sha256:8635a388062222082f4b06225b867b74a7e4ef942124453d4d1d1a5cb3750932"},
 ]
 
 [package.dependencies]
@@ -1272,9 +1272,9 @@ click = ">=7.0"
 h11 = ">=0.8"
 
 [package.extras]
-standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "watchfiles (>=0.13)", "websockets (>=10.0)"]
+standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "watchfiles (>=0.13)", "websockets (>=10.4)"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "6f6c99eef23ab4cef832fa47307469d5c63c09b9468af3d0735d83485f69a03b"
+content-hash = "58a304d539c35b1e2d3c812750a24d26b345011b6af7043c0168176d5dd70075"
