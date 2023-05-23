@@ -1,34 +1,60 @@
-name: Create Pull Request
-on: workflow_dispatch
-permissions:
-  contents: write
+name: copy OpenAPI Schema to another-repo
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "openapi.spec.json"
+  workflow_dispatch:
+
 jobs:
-  create:
+  copy:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      BRANCH: test-${{ github.run_id }}
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Push
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c "${BRANCH}"
-          git commit -m "Add empty commit" --allow-empty
-          git push origin "${BRANCH}"
-
-      - name: Generate GitHub Apps token
-        id: generate
+      - name: Generate token
+        id: generate_token
         uses: tibdex/github-app-token@v1
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-
-      - name: Create PR
+          app_id: ${{ secrets.MY_GITHUB_APP_ID }}
+          private_key: ${{ secrets.MY_GITHUB_APP_PRIVATE_KEY }}
+      - name: Setup commit description
         env:
-          GITHUB_TOKEN: ${{ steps.generate.outputs.token }}
+          RUN_URL: "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}"
+          HEAD_COMMIT_URL: "${{ github.event.repository.html_url }}/commit/${{ github.event.after || github.sha }}"
+        id: setup_description
         run: |
-          gh pr create --base "main" --title "Test" --body "Test"
+          DESCRIPTION=$(cat << EOF
+          update OpenAPI Schema file 🚀
+
+          created from ${{ env.RUN_URL }}
+          latest commit: ${{ env.HEAD_COMMIT_URL }}
+          )
+          DESCRIPTION="${DESCRIPTION//$'\n'/'%0A'}"
+          echo "::set-output name=content::$DESCRIPTION"
+      - name: Copy GraphQL Schema file
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ steps.generate_token.outputs.token }}
+        with:
+          source_file: "openapi.spec.json"
+          destination_repo: ${{ secrets.DESTINATION_REPO }}
+          destination_folder: ""
+          destination_branch: "main"
+          destination_branch_create: "feature/update-openapi"
+          user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          user_name: "github-actions[bot]"
+          commit_message: ${{ steps.setup_description.outputs.content }}
+      - name: create Pull Request to another-repo
+        run: |
+          gh pr create \
+            --title "update GraphQL Schema file " \
+            --body "${{ steps.setup_description.outputs.content }}" \
+            --repo ${{ secrets.DESTINATION_REPO }} \
+            --base main \
+            --head feature/update-openapi \
+            --reviewer "${{ github.event.head_commit.committer.username || github.triggering_actor }}"
+        env:
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
