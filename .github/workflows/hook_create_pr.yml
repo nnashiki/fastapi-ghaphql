@@ -18,8 +18,8 @@ jobs:
         id: generate_token
         uses: tibdex/github-app-token@v1
         with:
-          app_id: ${{ secrets.MY_GITHUB_APP_ID }}
-          private_key: ${{ secrets.MY_GITHUB_APP_PRIVATE_KEY }}
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
       - name: Setup commit description
         env:
           RUN_URL: "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}"
