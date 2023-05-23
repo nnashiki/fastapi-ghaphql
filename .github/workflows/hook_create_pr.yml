@@ -26,14 +26,11 @@ jobs:
           HEAD_COMMIT_URL: "${{ github.event.repository.html_url }}/commit/${{ github.event.after || github.sha }}"
         id: setup_description
         run: |
-          DESCRIPTION=$(cat << EOF
-          update OpenAPI Schema file 🚀
-
-          created from ${{ env.RUN_URL }}
-          latest commit: ${{ env.HEAD_COMMIT_URL }}
-          )
-          DESCRIPTION="${DESCRIPTION//$'\n'/'%0A'}"
-          echo "::set-output name=content::$DESCRIPTION"
+          echo "update GraphQL Schema file 🚀" > description.txt
+          echo "" >> description.txt
+          echo "created from ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}" >> description.txt
+          echo "latest commit: ${{ github.event.repository.html_url }}/commit/${{ github.event.after || github.sha }}" >> description.txt
+          echo "::set-output name=content::$(cat description.txt)"
       - name: Copy GraphQL Schema file
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
         env:
