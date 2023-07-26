@@ -26,6 +26,7 @@ black = "^22.10.0"
 flake8 = "^5.0.4"
 debugpy = "^1.6.3"
 pytest-cov = "^4.0.0"
+mypy = "^0.991"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -53,6 +54,12 @@ exclude = '''
 
 [tool.isort]
 profile = "black"
+
+[tool.mypy]
+python_version = "3.9"
+no_strict_optional = true
+ignore_missing_imports = true
+check_untyped_defs = true
 
 [tool.taskipy.variables]
 python_src_dir = "app app_tests migrations"
